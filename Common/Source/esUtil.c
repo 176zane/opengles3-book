@@ -139,6 +139,8 @@ EGLint GetContextRenderableType ( EGLDisplay eglDisplay )
 //          ES_WINDOW_STENCIL     - specifies that a stencil buffer should be created
 //          ES_WINDOW_MULTISAMPLE - specifies that a multi-sample buffer should be created
 //
+
+//任何使用EGL的应用程序必须执行的第一个操作就是创建和初始化与本地EGL显示的连接，对于iOS，该函数直接返回GL_TRUE，所以设置的width、height、title、flags无效,iOS可不调用此函数。
 GLboolean ESUTIL_API esCreateWindow ( ESContext *esContext, const char *title, GLint width, GLint height, GLuint flags )
 {
 #ifndef __APPLE__
@@ -166,14 +168,14 @@ GLboolean ESUTIL_API esCreateWindow ( ESContext *esContext, const char *title, G
    {
       return GL_FALSE;
    }
-
+    //1.打开与EGL显示服务器的连接
    esContext->eglDisplay = eglGetDisplay( esContext->eglNativeDisplay );
    if ( esContext->eglDisplay == EGL_NO_DISPLAY )
    {
       return GL_FALSE;
    }
 
-   // Initialize EGL
+   //2.初始化EGL内部数据结构，返回EGL实现的主版本号和次版本号
    if ( !eglInitialize ( esContext->eglDisplay, &majorVersion, &minorVersion ) )
    {
       return GL_FALSE;
@@ -181,6 +183,7 @@ GLboolean ESUTIL_API esCreateWindow ( ESContext *esContext, const char *title, G
 
    {
       EGLint numConfigs = 0;
+       //attribList提供所有属性的相关首选值
       EGLint attribList[] =
       {
          EGL_RED_SIZE,       5,
@@ -188,7 +191,9 @@ GLboolean ESUTIL_API esCreateWindow ( ESContext *esContext, const char *title, G
          EGL_BLUE_SIZE,      5,
          EGL_ALPHA_SIZE,     ( flags & ES_WINDOW_ALPHA ) ? 8 : EGL_DONT_CARE,
          EGL_DEPTH_SIZE,     ( flags & ES_WINDOW_DEPTH ) ? 8 : EGL_DONT_CARE,
+          //模板缓冲区位数
          EGL_STENCIL_SIZE,   ( flags & ES_WINDOW_STENCIL ) ? 8 : EGL_DONT_CARE,
+          //可用多重采样缓冲区位数
          EGL_SAMPLE_BUFFERS, ( flags & ES_WINDOW_MULTISAMPLE ) ? 1 : 0,
          // if EGL_KHR_create_context extension is supported, then we will use
          // EGL_OPENGL_ES3_BIT_KHR instead of EGL_OPENGL_ES2_BIT in the attribute list
@@ -197,6 +202,7 @@ GLboolean ESUTIL_API esCreateWindow ( ESContext *esContext, const char *title, G
       };
 
       // Choose config
+       //3.可能会返回多组配置
       if ( !eglChooseConfig ( esContext->eglDisplay, attribList, &config, 1, &numConfigs ) )
       {
          return GL_FALSE;
@@ -218,7 +224,7 @@ GLboolean ESUTIL_API esCreateWindow ( ESContext *esContext, const char *title, G
    }
 #endif // ANDROID
 
-   // Create a surface
+   //4.创建屏幕上的渲染表面，最后的参数NULL表示使用默认值，创建的窗口渲染表面支持前台缓冲区和后台缓冲区。与该函数对应的是eglCreatePbufferSurface函数，用于创建屏幕外渲染区域（像素缓冲区），Pbuffer无法像窗口那样在完成渲染后交换缓冲区来显示在屏幕上，只能将数值复制到应用程序或将其绑定更改为纹理，通常用于生成纹理贴图。
    esContext->eglSurface = eglCreateWindowSurface ( esContext->eglDisplay, config, 
                                                     esContext->eglNativeWindow, NULL );
 
@@ -227,16 +233,15 @@ GLboolean ESUTIL_API esCreateWindow ( ESContext *esContext, const char *title, G
       return GL_FALSE;
    }
 
-   // Create a GL context
-   esContext->eglContext = eglCreateContext ( esContext->eglDisplay, config, 
-                                              EGL_NO_CONTEXT, contextAttribs );
+   //5.创建一个渲染上下文，其中包含操作的索引状态信息
+   esContext->eglContext = eglCreateContext ( esContext->eglDisplay, config,EGL_NO_CONTEXT,contextAttribs );
 
    if ( esContext->eglContext == EGL_NO_CONTEXT )
    {
       return GL_FALSE;
    }
 
-   // Make the context current
+   //6.Make the context current
    if ( !eglMakeCurrent ( esContext->eglDisplay, esContext->eglSurface, 
                           esContext->eglSurface, esContext->eglContext ) )
    {

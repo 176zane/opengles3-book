@@ -11,9 +11,7 @@
 		7625BC3F17F32A780019C421 /* FileWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7625BC3A17F32A780019C421 /* FileWrapper.m */; };
 		7625BC4017F32A780019C421 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7625BC3B17F32A780019C421 /* main.m */; };
 		7625BC4117F32A780019C421 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7625BC3D17F32A780019C421 /* ViewController.m */; };
-		7626523617F10E6C007CCD43 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7626523517F10E6C007CCD43 /* Foundation.framework */; };
 		7626523817F10E6C007CCD43 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7626523717F10E6C007CCD43 /* CoreGraphics.framework */; };
-		7626523A17F10E6C007CCD43 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7626523917F10E6C007CCD43 /* UIKit.framework */; };
 		7626523C17F10E6C007CCD43 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7626523B17F10E6C007CCD43 /* GLKit.framework */; };
 		7626523E17F10E6C007CCD43 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7626523D17F10E6C007CCD43 /* OpenGLES.framework */; };
 		7626524417F10E6C007CCD43 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7626524217F10E6C007CCD43 /* InfoPlist.strings */; };
@@ -82,9 +80,7 @@
 			files = (
 				7626523E17F10E6C007CCD43 /* OpenGLES.framework in Frameworks */,
 				7626523817F10E6C007CCD43 /* CoreGraphics.framework in Frameworks */,
-				7626523A17F10E6C007CCD43 /* UIKit.framework in Frameworks */,
 				7626523C17F10E6C007CCD43 /* GLKit.framework in Frameworks */,
-				7626523617F10E6C007CCD43 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

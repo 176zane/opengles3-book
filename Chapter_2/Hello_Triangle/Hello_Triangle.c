@@ -101,8 +101,11 @@ int Init ( ESContext *esContext )
 {
    UserData *userData = esContext->userData;
    char vShaderStr[] =
+    //声明着色器版本
       "#version 300 es                          \n"
+    //layout(location = 0)限定符表示这个变量的位置是顶点属性0
       "layout(location = 0) in vec4 vPosition;  \n"
+    //着色器中的main函数表示着色器执行的开始
       "void main()                              \n"
       "{                                        \n"
       "   gl_Position = vPosition;              \n"
@@ -111,6 +114,7 @@ int Init ( ESContext *esContext )
    char fShaderStr[] =
       "#version 300 es                              \n"
       "precision mediump float;                     \n"
+    //fragColor的值将会被输出到颜色缓冲区
       "out vec4 fragColor;                          \n"
       "void main()                                  \n"
       "{                                            \n"
@@ -133,7 +137,7 @@ int Init ( ESContext *esContext )
    {
       return 0;
    }
-
+    //不同的着色器编译为一个着色器对象之后，必须连接到一个程序对象并一起链接，才能绘制图形
    glAttachShader ( programObject, vertexShader );
    glAttachShader ( programObject, fragmentShader );
 
@@ -159,13 +163,14 @@ int Init ( ESContext *esContext )
          free ( infoLog );
       }
 
+       
       glDeleteProgram ( programObject );
       return FALSE;
    }
 
    // Store the program object
    userData->programObject = programObject;
-
+    //设置颜色缓冲区的清除颜色为白色
    glClearColor ( 1.0f, 1.0f, 1.0f, 0.0f );
    return TRUE;
 }
@@ -206,15 +211,16 @@ void Shutdown ( ESContext *esContext )
 
 int esMain ( ESContext *esContext )
 {
+    //应用程序所需的数据保存在userData中
    esContext->userData = malloc ( sizeof ( UserData ) );
-
+    //使用EGl API创建渲染表面和渲染上下文，ES_WINDOW_RGB参数指定创建一个RGB帧缓冲区,iOS可不调用该函数
    esCreateWindow ( esContext, "Hello Triangle", 320, 240, ES_WINDOW_RGB );
 
    if ( !Init ( esContext ) )
    {
       return GL_FALSE;
    }
-
+    //注册回调函数
    esRegisterShutdownFunc ( esContext, Shutdown );
    esRegisterDrawFunc ( esContext, Draw );
 

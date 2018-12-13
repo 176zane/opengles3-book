@@ -59,7 +59,8 @@ extern void esMain( ESContext *esContext );
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    //创建渲染上下文
+    //EAGL是Apple提供的自己实现的EGL API的iOS实现
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
 
     if (!self.context)
@@ -103,10 +104,11 @@ extern void esMain( ESContext *esContext );
 
 - (void)setupGL
 {
+    //指定当前上下文
     [EAGLContext setCurrentContext:self.context];
-    
+    //初始化函数 将_esContext申请的内存空间清零
     memset( &_esContext, 0, sizeof( _esContext ) );
-  
+
     esMain( &_esContext );
 }
 
