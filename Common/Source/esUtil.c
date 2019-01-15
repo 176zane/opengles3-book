@@ -224,7 +224,7 @@ GLboolean ESUTIL_API esCreateWindow ( ESContext *esContext, const char *title, G
    }
 #endif // ANDROID
 
-   //4.创建屏幕上的渲染表面，最后的参数NULL表示使用默认值，创建的窗口渲染表面支持前台缓冲区和后台缓冲区。与该函数对应的是eglCreatePbufferSurface函数，用于创建屏幕外渲染区域（像素缓冲区），Pbuffer无法像窗口那样在完成渲染后交换缓冲区来显示在屏幕上，只能将数值复制到应用程序或将其绑定更改为纹理，通常用于生成纹理贴图。
+   //4.创建屏幕上的渲染表面，最后的参数NULL表示使用默认值，对于OPENGL ES 3.0来说，只支持双缓冲区窗口，即创建的窗口渲染表面支持前台缓冲区和后台缓冲区。与该函数对应的是eglCreatePbufferSurface函数，用于创建屏幕外渲染区域（像素缓冲区），Pbuffer无法像窗口那样在完成渲染后交换缓冲区来显示在屏幕上，只能将数值复制到应用程序或将其绑定更改为纹理，通常用于生成纹理贴图。
    esContext->eglSurface = eglCreateWindowSurface ( esContext->eglDisplay, config, 
                                                     esContext->eglNativeWindow, NULL );
 

@@ -53,7 +53,7 @@ GLuint LoadShader ( GLenum type, const char *shaderSrc )
    GLuint shader;
    GLint compiled;
 
-   // Create the shader object
+   //1. Create the shader object
    shader = glCreateShader ( type );
 
    if ( shader == 0 )
@@ -61,10 +61,10 @@ GLuint LoadShader ( GLenum type, const char *shaderSrc )
       return 0;
    }
 
-   // Load the shader source
+   //2. Load the shader source，参数1表示着色器源字符串数量，着色器可以由多个源字符串组成，但只能有一个main函数。
    glShaderSource ( shader, 1, &shaderSrc, NULL );
 
-   // Compile the shader
+   //3.Compile the shader
    glCompileShader ( shader );
 
    // Check the compile status
@@ -79,13 +79,13 @@ GLuint LoadShader ( GLenum type, const char *shaderSrc )
       if ( infoLen > 1 )
       {
          char *infoLog = malloc ( sizeof ( char ) * infoLen );
-
+          //第三个参数为写入日志的长度（减去null终止符），NULL表示不需要知道长度
          glGetShaderInfoLog ( shader, infoLen, NULL, infoLog );
          esLogMessage ( "Error compiling shader:\n%s\n", infoLog );
 
          free ( infoLog );
       }
-
+       //当一个着色器连接到程序对象后，调用该函数不会立刻删除着色器，而是将其标记为删除，在着色器不再连接到任何程序对象时，释放它的内存。
       glDeleteShader ( shader );
       return 0;
    }
@@ -126,22 +126,22 @@ int Init ( ESContext *esContext )
    GLuint programObject;
    GLint linked;
 
-   // Load the vertex/fragment shaders
+   //Load the vertex/fragment shaders
    vertexShader = LoadShader ( GL_VERTEX_SHADER, vShaderStr );
    fragmentShader = LoadShader ( GL_FRAGMENT_SHADER, fShaderStr );
 
-   // Create the program object
+   //4.Create the program object，程序对象是一个容器对象，需要将其与着色器连接，并链接一个最终的可执行程序。
    programObject = glCreateProgram ( );
 
    if ( programObject == 0 )
    {
       return 0;
    }
-    //不同的着色器编译为一个着色器对象之后，必须连接到一个程序对象并一起链接，才能绘制图形
+    //5.不同的着色器编译为一个着色器对象之后，必须连接到一个程序对象并一起链接，才能绘制图形，OPENGL ES中程序对象必须连接一个顶点着色器和一个片段着色器。注意，着色器可以在任何时候连接，在连接到程序之前不一定需要编译，甚至可以没有源代码。
    glAttachShader ( programObject, vertexShader );
    glAttachShader ( programObject, fragmentShader );
 
-   // Link the program
+   //6.Link the program,链接程序将确保顶点着色器写入片段着色器所使用的所有顶点着色器输出变量，链接程序确保任何在顶点和片段着色器中都声明的统一变量和统一变量缓冲区的类型相符，链接程序确保最终程序符合具体实现的限制。
    glLinkProgram ( programObject );
 
    // Check the link status
@@ -192,13 +192,13 @@ void Draw ( ESContext *esContext )
    // Clear the color buffer
    glClear ( GL_COLOR_BUFFER_BIT );
 
-   // Use the program object
+   // 将程序设置为活动程序
    glUseProgram ( userData->programObject );
 
-   // Load the vertex data
+   // 加载顶点数据，indx参数指定通用顶点属性索引，size参数表示顶点数组中微索引引用的顶点属性所指定的分量数量，type参数表示数据格式，normalized参数表示非浮点数据类型转换为浮点值时是否应该规范化，stride参数指定顶点索引I和I+1表示的顶点数据之间的位移，ptr参数在使用客户端顶点数组时表示保存顶点属性数据的缓冲区指针，在使用顶点缓冲区对象时，表示该缓冲区内的偏移量。
    glVertexAttribPointer ( 0, 3, GL_FLOAT, GL_FALSE, 0, vVertices );
    glEnableVertexAttribArray ( 0 );
-
+    //用元素索引为first到first+count-1的元素指定的顶点绘制mode指定的图元
    glDrawArrays ( GL_TRIANGLES, 0, 3 );
 }
 

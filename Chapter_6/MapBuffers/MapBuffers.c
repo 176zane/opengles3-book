@@ -121,7 +121,7 @@ void DrawPrimitiveWithVBOsMapBuffers ( ESContext *esContext,
       glBindBuffer ( GL_ARRAY_BUFFER, userData->vboIds[0] );
       glBufferData ( GL_ARRAY_BUFFER, vtxStride * numVertices,
                      NULL, GL_STATIC_DRAW );
-
+       //映射顶点数据缓冲区，target设置为缓冲区类型，offset表示缓冲区数据存储中的偏移量，单位字节。length表示需要映射的缓冲区数据的字节数，access表示访问标志的位域组合。
       vtxMappedBuf = ( GLfloat * )
                      glMapBufferRange ( GL_ARRAY_BUFFER, 0, vtxStride * numVertices,
                                         GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT );

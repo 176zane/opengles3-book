@@ -88,7 +88,7 @@ int Init ( ESContext *esContext )
 
    // Create the program object
    programObject = esLoadProgram ( vShaderStr, fShaderStr );
-
+    //获取由统一变量名称name指定的统一变量的位置
    userData->offsetLoc = glGetUniformLocation ( programObject, "u_offset" );
 
    if ( programObject == 0 )
@@ -113,13 +113,15 @@ int Init ( ESContext *esContext )
 //              drawn as triangles
 // indices    - pointer to element index buffer.
 //
+//不使用顶点缓冲区对象进行图元绘制
 void DrawPrimitiveWithoutVBOs ( GLfloat *vertices,
                                 GLint vtxStride,
                                 GLint numIndices,
                                 GLushort *indices )
 {
+    //使用顶点数组，vtxBuf表示保存顶点属性数据的缓冲区的指针。
    GLfloat   *vtxBuf = vertices;
-
+//???这里应该是使用该函数指定一个未使用的缓冲区对象。
    glBindBuffer ( GL_ARRAY_BUFFER, 0 );
    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, 0 );
 
@@ -151,14 +153,15 @@ void DrawPrimitiveWithVBOs ( ESContext *esContext,
    UserData *userData = esContext->userData;
    GLuint   offset = 0;
 
-   // vboIds[0] - used to store vertex attribute data
-   // vboIds[l] - used to store element indices
+   // vboIds[0] - 用于存储顶点属性数据
+   // vboIds[l] - 用于存储图元索引
    if ( userData->vboIds[0] == 0 && userData->vboIds[1] == 0 )
-   {
-      // Only allocate on the first draw
+   {// Only allocate on the first draw
+       //分配n个缓冲区对象名称，并在buffer中返回它们。
       glGenBuffers ( 2, userData->vboIds );
-
+       //用于指定当前缓冲区对象，第一次通过该函数绑定缓冲区对象名称时，缓冲区对象以默认状态分配。
       glBindBuffer ( GL_ARRAY_BUFFER, userData->vboIds[0] );
+       //创建和初始化或更新缓冲区对象数据存储。size表示缓冲区数据存储大小，以字节数表示。data参数可以为NULL，表示保留的数据存储不进行初始化，若为有效指针，则其内容被复制到分配的数据存储。对于静态几何形状，调用该函数后，客户数据存储将不再需要，可以释放。
       glBufferData ( GL_ARRAY_BUFFER, vtxStride * numVertices,
                      vtxBuf, GL_STATIC_DRAW );
       glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, userData->vboIds[1] );
@@ -172,7 +175,7 @@ void DrawPrimitiveWithVBOs ( ESContext *esContext,
 
    glEnableVertexAttribArray ( VERTEX_POS_INDX );
    glEnableVertexAttribArray ( VERTEX_COLOR_INDX );
-
+    //加载顶点数据，indx参数指定通用顶点属性索引，size参数表示顶点数组中微索引引用的顶点属性所指定的分量数量，type参数表示数据格式，normalized参数表示非浮点数据类型转换为浮点值时是否应该规范化，stride参数指定顶点索引I和I+1表示的顶点数据之间的位移，ptr参数在使用客户端顶点数组时表示保存顶点属性数据的缓冲区指针，在使用顶点缓冲区对象时，表示该缓冲区内的偏移量
    glVertexAttribPointer ( VERTEX_POS_INDX, VERTEX_POS_SIZE,
                            GL_FLOAT, GL_FALSE, vtxStride,
                            ( const void * ) offset );

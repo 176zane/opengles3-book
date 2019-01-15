@@ -122,11 +122,11 @@ int Init ( ESContext *esContext )
    glBufferData ( GL_ELEMENT_ARRAY_BUFFER, sizeof ( indices ),
                   indices, GL_STATIC_DRAW );
 
-   // Generate VAO Id
+   // Generate VAO Id，array指向一个n个元素的数组的指针，该数组是分配的顶点数组对象返回的位置
    glGenVertexArrays ( 1, &userData->vaoId );
 
-   // Bind the VAO and then setup the vertex
-   // attributes
+   // Bind the VAO and then setup the vertex attributes
+   //每个VAO都包含一个完整的状态向量，描述所有顶点缓冲区绑定和启用的顶点客户状态，绑定时，它的状态向量提供顶点缓冲区状态的当前设置，绑定后，修改顶点数组状态的后续调用将影响新的VAO
    glBindVertexArray ( userData->vaoId );
 
    glBindBuffer ( GL_ARRAY_BUFFER, userData->vboIds[0] );

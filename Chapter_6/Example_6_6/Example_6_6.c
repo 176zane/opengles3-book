@@ -131,6 +131,7 @@ void DrawPrimitiveWithVBOs ( ESContext *esContext,
 
    glBindBuffer ( GL_ARRAY_BUFFER, userData->vboIds[0] );
    glEnableVertexAttribArray ( VERTEX_POS_INDX );
+    //ptr参数为0 是因为对于每个顶点属性使用单独的缓冲区对象，因此偏移量为0
    glVertexAttribPointer ( VERTEX_POS_INDX, VERTEX_POS_SIZE,
                            GL_FLOAT, GL_FALSE, vtxStrides[0], 0 );
 
@@ -175,8 +176,9 @@ void Draw ( ESContext *esContext )
       VERTEX_COLOR_SIZE * sizeof ( GLfloat )
    };
 
-   // Index buffer data
+   // 图元索引缓冲数据
    GLushort indices[3] = { 0, 1, 2 };
+    // 顶点属性缓冲数据
    GLfloat *vtxBuf[2] = { vertexPos, color };
 
    glViewport ( 0, 0, esContext->width, esContext->height );

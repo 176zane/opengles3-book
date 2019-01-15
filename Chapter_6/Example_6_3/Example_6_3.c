@@ -95,7 +95,7 @@ int Init ( ESContext *esContext )
 void Draw ( ESContext *esContext )
 {
    UserData *userData = esContext->userData;
-   GLfloat color[4] = { 1.0f, 0.0f, 0.0f, 1.0f };
+   GLfloat color[4] = { 0.0f, 1.0f, 0.0f, 1.0f };
    // 3 vertices, with (x,y,z) per-vertex
    GLfloat vertexPos[3 * 3] =
    {
@@ -112,11 +112,12 @@ void Draw ( ESContext *esContext )
 
    glVertexAttribPointer ( 0, 3, GL_FLOAT, GL_FALSE, 0, vertexPos );
    glEnableVertexAttribArray ( 0 );
+//常量顶点属性
    glVertexAttrib4fv ( 1, color );
 
 
    glDrawArrays ( GL_TRIANGLES, 0, 3 );
-
+//这里为啥又禁用了顶点数组？
    glDisableVertexAttribArray ( 0 );
 }
 
