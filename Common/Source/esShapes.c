@@ -168,13 +168,14 @@ int ESUTIL_API esGenSphere ( int numSlices, float radius, GLfloat **vertices, GL
 /// \return The number of indices required for rendering the buffers (the number of indices stored in the indices array
 ///         if it is not NULL ) as a GL_TRIANGLE_STRIP
 //
+//生成一个立方体，开辟数组空间并将生成的顶点数据存储在其中，同时生成要绘制的图元索引数据。
 int ESUTIL_API esGenCube ( float scale, GLfloat **vertices, GLfloat **normals,
                            GLfloat **texCoords, GLuint **indices )
 {
    int i;
    int numVertices = 24;
    int numIndices = 36;
-
+    //顶点位置数据
    GLfloat cubeVerts[] =
    {
       -0.5f, -0.5f, -0.5f,
@@ -202,7 +203,7 @@ int ESUTIL_API esGenCube ( float scale, GLfloat **vertices, GLfloat **normals,
       0.5f,  0.5f,  0.5f,
       0.5f,  0.5f, -0.5f,
    };
-
+    //法线数据
    GLfloat cubeNormals[] =
    {
       0.0f, -1.0f, 0.0f,
@@ -230,7 +231,7 @@ int ESUTIL_API esGenCube ( float scale, GLfloat **vertices, GLfloat **normals,
       1.0f, 0.0f, 0.0f,
       1.0f, 0.0f, 0.0f,
    };
-
+    //纹理坐标
    GLfloat cubeTex[] =
    {
       0.0f, 0.0f,

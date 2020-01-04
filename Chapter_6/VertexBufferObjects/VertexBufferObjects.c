@@ -136,7 +136,7 @@ void DrawPrimitiveWithoutVBOs ( GLfloat *vertices,
    glVertexAttribPointer ( VERTEX_COLOR_INDX,
                            VERTEX_COLOR_SIZE, GL_FLOAT,
                            GL_FALSE, vtxStride, vtxBuf );
-
+    //mode指定要渲染的图元，count表示要绘制的索引数量，type指定indices中保存的元素索引类型，indices指向元素索引存储位置的指针
    glDrawElements ( GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT,
                     indices );
 

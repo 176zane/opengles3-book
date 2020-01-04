@@ -113,7 +113,7 @@ int Init ( ESContext *esContext )
    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, 0 );
    free ( indices );
 
-   // Position VBO for cube model
+   // Position VBO for cube model，24个顶点
    glGenBuffers ( 1, &userData->positionVBO );
    glBindBuffer ( GL_ARRAY_BUFFER, userData->positionVBO );
    glBufferData ( GL_ARRAY_BUFFER, 24 * sizeof ( GLfloat ) * 3, positions, GL_STATIC_DRAW );
@@ -246,7 +246,8 @@ void Draw ( ESContext *esContext )
    glVertexAttribPointer ( COLOR_LOC, 4, GL_UNSIGNED_BYTE,
                            GL_TRUE, 4 * sizeof ( GLubyte ), ( const void * ) NULL );
    glEnableVertexAttribArray ( COLOR_LOC );
-   glVertexAttribDivisor ( COLOR_LOC, 1 ); // One color per instance
+    // 每个图元实例读取一次颜色数据
+   glVertexAttribDivisor ( COLOR_LOC, 1 );
 
 
    // Load the instance MVP buffer
@@ -271,7 +272,7 @@ void Draw ( ESContext *esContext )
    // Bind the index buffer
    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, userData->indicesIBO );
 
-   // Draw the cubes
+   // mode指定要渲染的图元，count指定绘制的索引数量，type指定保存在indices中的元素索引类型，indices指定元素索引存储位置的一个指针，instanceCount指定绘制的图元实例数量
    glDrawElementsInstanced ( GL_TRIANGLES, userData->numIndices, GL_UNSIGNED_INT, ( const void * ) NULL, NUM_INSTANCES );
 }
 

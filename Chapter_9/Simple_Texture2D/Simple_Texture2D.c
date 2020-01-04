@@ -56,7 +56,7 @@ typedef struct
 //
 GLuint CreateSimpleTexture2D( )
 {
-   // Texture object handle
+   // Texture object handle（纹理对象用一个无符号整数表示，该整数是纹理对象的一个句柄，纹理对象时一个容器对象，保存渲染所需的纹理数据，如图像数据、过滤模式和包装模式）
    GLuint textureId;
 
    // 2x2 Image, 3 bytes per pixel (R, G, B)
@@ -68,19 +68,19 @@ GLuint CreateSimpleTexture2D( )
       255, 255,   0  // Yellow
    };
 
-   // Use tightly packed data
+   // 设置打包或解包选项：pname指定设置的像素存储类型，有影响glTextImage2D等的数据从内存中解包的方式和glReadPixels时数据打包到内存中的方式；paramd指定打包或解包选项的整数值。此处将解包对齐设置为1，因为着像素行被认定为从1个字节便捷开始，也就是数据被紧密打包。
    glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 
-   // Generate a texture object
+   // 生成纹理对象：n指定要生成的纹理对象数量；texture是一个保存n个纹理对象ID的无符号整数数组
    glGenTextures ( 1, &textureId );
 
-   // Bind the texture object
+   // 一旦用glGenTexture生成了纹理对象ID，应用程序就必须绑定纹理对象进行操作
    glBindTexture ( GL_TEXTURE_2D, textureId );
 
-   // Load the texture
+    // 将图像数据加载到纹理对象：target指定纹理绑定的目标；level指定要加载的mip级别，第一个为0，后续递增；internalFarmat是纹理存储的内部格式；width图像的像素宽度；height图像的像素高度；border保留的与桌面OpenGL兼容的参数，直接设置为0；iformat输入的纹理格式数据；type输入像素数据的类型；pixels包含图像的实际像素数据
    glTexImage2D ( GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_UNSIGNED_BYTE, pixels );
 
-   // Set the filtering mode
+   // 设置过滤模式
    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
    glTexParameteri ( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 

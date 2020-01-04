@@ -115,7 +115,7 @@ void Draw ( ESContext *esContext )
 //常量顶点属性
    glVertexAttrib4fv ( 1, color );
 
-
+    //first 指定启用的顶点数组中的起始顶点索引
    glDrawArrays ( GL_TRIANGLES, 0, 3 );
 //这里为啥又禁用了顶点数组？
    glDisableVertexAttribArray ( 0 );

@@ -45,7 +45,7 @@ typedef struct
    // Uniform locations
    GLint  mvpLoc;
 
-   // Vertex daata
+   // Vertex data
    GLfloat  *vertices;
    GLuint   *indices;
    int       numIndices;
@@ -88,10 +88,10 @@ int Init ( ESContext *esContext )
    // Load the shaders and get a linked program object
    userData->programObject = esLoadProgram ( vShaderStr, fShaderStr );
 
-   // Get the uniform locations
+   // 获取由name指定的统一变量的位置
    userData->mvpLoc = glGetUniformLocation ( userData->programObject, "u_mvpMatrix" );
 
-   // Generate the vertex data
+   // 生成顶点数据
    userData->numIndices = esGenCube ( 1.0, &userData->vertices,
                                       NULL, NULL, &userData->indices );
 
@@ -167,7 +167,7 @@ void Draw ( ESContext *esContext )
    // Set the vertex color to red
    glVertexAttrib4f ( 1, 1.0f, 0.0f, 0.0f, 1.0f );
 
-   // Load the MVP matrix
+   // 加载MVP矩阵，location指定要加载值的统一变量的位置，count指定要修改的矩阵数量，transpose指定矩阵采用列优先顺序(GL_FALSE）还是行优先（GL_TRUE),value指向计数元素数组的指针
    glUniformMatrix4fv ( userData->mvpLoc, 1, GL_FALSE, ( GLfloat * ) &userData->mvpMatrix.m[0][0] );
 
    // Draw the cube

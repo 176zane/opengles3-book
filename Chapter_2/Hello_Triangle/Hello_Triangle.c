@@ -188,8 +188,8 @@ void Draw ( ESContext *esContext )
 
    // Set the viewport
    glViewport ( 0, 0, esContext->width, esContext->height );
-
-   // Clear the color buffer
+    
+    // Clear the color buffer
    glClear ( GL_COLOR_BUFFER_BIT );
 
    // 将程序设置为活动程序
@@ -200,6 +200,7 @@ void Draw ( ESContext *esContext )
    glEnableVertexAttribArray ( 0 );
     //用元素索引为first到first+count-1的元素指定的顶点绘制mode指定的图元
    glDrawArrays ( GL_TRIANGLES, 0, 3 );
+     esLogMessage("宽高%d,%d",esContext->width,esContext->height);
 }
 
 void Shutdown ( ESContext *esContext )
@@ -216,13 +217,15 @@ int esMain ( ESContext *esContext )
     //使用EGl API创建渲染表面和渲染上下文，ES_WINDOW_RGB参数指定创建一个RGB帧缓冲区,iOS可不调用该函数
    esCreateWindow ( esContext, "Hello Triangle", 320, 240, ES_WINDOW_RGB );
 
+    
+
    if ( !Init ( esContext ) )
    {
       return GL_FALSE;
    }
+   
     //注册回调函数
    esRegisterShutdownFunc ( esContext, Shutdown );
    esRegisterDrawFunc ( esContext, Draw );
-
    return GL_TRUE;
 }

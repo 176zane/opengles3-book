@@ -15,7 +15,6 @@
 		7625BD9917F3ADAB0019C421 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7625BD9717F3ADAB0019C421 /* InfoPlist.strings */; };
 		7625BDA217F3ADAB0019C421 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7625BDA017F3ADAB0019C421 /* Main_iPhone.storyboard */; };
 		7625BDA517F3ADAB0019C421 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7625BDA317F3ADAB0019C421 /* Main_iPad.storyboard */; };
-		7625BDAE17F3ADAB0019C421 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7625BDAD17F3ADAB0019C421 /* Images.xcassets */; };
 		7625BDB517F3ADAB0019C421 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7625BDB417F3ADAB0019C421 /* XCTest.framework */; };
 		7625BDB617F3ADAB0019C421 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7625BD8A17F3ADAB0019C421 /* Foundation.framework */; };
 		7625BDB717F3ADAB0019C421 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7625BD8E17F3ADAB0019C421 /* UIKit.framework */; };
@@ -54,7 +53,6 @@
 		7625BD9C17F3ADAB0019C421 /* Instancing-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Instancing-Prefix.pch"; sourceTree = "<group>"; };
 		7625BDA117F3ADAB0019C421 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		7625BDA417F3ADAB0019C421 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		7625BDAD17F3ADAB0019C421 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7625BDB317F3ADAB0019C421 /* InstancingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstancingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7625BDB417F3ADAB0019C421 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		7625BDBC17F3ADAB0019C421 /* InstancingTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "InstancingTests-Info.plist"; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 				7625BDD017F3ADD60019C421 /* iOS */,
 				7625BDA017F3ADAB0019C421 /* Main_iPhone.storyboard */,
 				7625BDA317F3ADAB0019C421 /* Main_iPad.storyboard */,
-				7625BDAD17F3ADAB0019C421 /* Images.xcassets */,
 				7625BD9517F3ADAB0019C421 /* Supporting Files */,
 			);
 			path = Instancing;
@@ -239,6 +236,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Daniel Ginsburg";
 				TargetAttributes = {
+					7625BD8617F3ADAB0019C421 = {
+						DevelopmentTeam = XV4RU36P9Q;
+					};
 					7625BDB217F3ADAB0019C421 = {
 						TestTargetID = 7625BD8617F3ADAB0019C421;
 					};
@@ -270,7 +270,6 @@
 			files = (
 				7625BDA517F3ADAB0019C421 /* Main_iPad.storyboard in Resources */,
 				7625BDA217F3ADAB0019C421 /* Main_iPhone.storyboard in Resources */,
-				7625BDAE17F3ADAB0019C421 /* Images.xcassets in Resources */,
 				7625BD9917F3ADAB0019C421 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -435,9 +434,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = XV4RU36P9Q;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Instancing/Instancing-Prefix.pch";
 				INFOPLIST_FILE = "Instancing/Instancing-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = ES3Book.Instancing1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = ../../../../Common/Include;
 				WRAPPER_EXTENSION = app;
@@ -449,9 +450,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = XV4RU36P9Q;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Instancing/Instancing-Prefix.pch";
 				INFOPLIST_FILE = "Instancing/Instancing-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = ES3Book.Instancing1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = ../../../../Common/Include;
 				WRAPPER_EXTENSION = app;
@@ -519,6 +522,7 @@
 				7625BDC617F3ADAB0019C421 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7625BDC717F3ADAB0019C421 /* Build configuration list for PBXNativeTarget "InstancingTests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +531,7 @@
 				7625BDC917F3ADAB0019C421 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
